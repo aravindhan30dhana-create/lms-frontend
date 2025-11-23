@@ -20,8 +20,8 @@ const CourseDetail: React.FC = () => {
   const [selectedLesson, setSelectedLesson] = useState<any>(null);
   const [completedLessons, setCompletedLessons] = useState<string[]>([]);
 
-  const courseAPI = 'http://localhost:8080/api/courses';
-  const enrollAPI = 'http://localhost:8080/api/student/enrollments';
+  const courseAPI = import.meta.env.VITE_API_BASE_URL + '/courses' || 'http://localhost:8080/api/courses';
+  const enrollAPI = import.meta.env.VITE_API_BASE_URL + '/student/enrollments' || 'http://localhost:8080/api/student/enrollments';
 
   // ✅ Fetch course details
   useEffect(() => {
@@ -46,7 +46,7 @@ const CourseDetail: React.FC = () => {
       if (!user || user.role !== 'student') return;
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get(
+        const res = await axios.get(import.meta.env.VITE_API_BASE_URL + `/student/enrollments/${id}`||
           `http://localhost:8080/api/student/enrollments/${id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -91,7 +91,7 @@ const CourseDetail: React.FC = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post(
+      const res = await axios.post(import.meta.env.VITE_API_BASE_URL + `/student/enroll/${id}` || 
         `http://localhost:8080/api/student/enroll/${id}`,
         {},
         {

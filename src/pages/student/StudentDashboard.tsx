@@ -45,7 +45,7 @@ const StudentDashboard: React.FC = () => {
         }
 
         const response = await axios.get<Enrollment[]>(
-          "http://localhost:8080/api/student/enrollments",
+          import.meta.env.VITE_API_BASE_URL + '/student/enrollments' || 'http://localhost:8080/api/student/enrollments',
           {
             headers: {
               Authorization: `Bearer ${token}`,
